@@ -1,5 +1,6 @@
 import React from "react"
 import Table from "./table";
+import UploadFile from "./upload";
 import { Button } from "@material-ui/core";
 
 function Dashboard() {
@@ -24,6 +25,7 @@ function Dashboard() {
                 <Button variant="contained" color="primary" onClick={getTemplateFile}>Template File</Button>
             </div>
             <br/>
+            <UploadFile />
             <div><Table /></div>
         </div>
     )

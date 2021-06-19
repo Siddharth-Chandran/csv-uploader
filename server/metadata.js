@@ -24,12 +24,12 @@ const columns = [
         headerName: "Salary",
         width: 150,
         editable: true
-    },{
+    }, {
         field: "department",
         headerName: "Department",
         width: 150,
         editable: true
-    },{
+    }, {
         field: "company",
         headerName: "Company",
         width: 150,
@@ -37,6 +37,17 @@ const columns = [
     },
 ];
 
+const schema = {
+    "type": "array",
+    "items": {
+        "properties": {
+            "id": { "type": "string" },
+            "name": { "type": "string" }
+        },
+        "required": ["id", "name"]
+    }
+}
+
 module.exports = {
-    columns
+    columns, schema
 }
