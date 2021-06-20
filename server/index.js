@@ -35,7 +35,6 @@ app.post("/api/upload", (req, res) => {
         } else {
             const jsonArray = csv({ colParser: metaData.columnParser, checkType: true }).fromFile(`${newpath}${filename}`)
             jsonArray.then(json => {
-                console.log(json)
                 var result = validate(json, metaData.schema)
                 if (!result.valid) res.status(500).send({ message: "Data provided doesnt match the template file." + 
                 "Check if header data is wrong. It could be that user uploaded a string value in numeric column.", code: 500 });
@@ -62,7 +61,6 @@ app.get("/api/data", (req, res) => {
             return;
         })
     } catch (err) {
-        console.log(err);
         res.json([]);
         return;
     }

@@ -28,6 +28,15 @@ npm run build
 # It invokes the build command mentioned in package.json, which internally calls: cd client && npm install && npm run build
 ```
 
+## Docket Image Creation
+Run the below commands to create a docker image and run:
+```bash
+# Note: The below commands are for the user: sid5794 and repository: csv-uploader
+docker build -t sid5794/csv-uploader .
+
+docker run -d -p 3001:3001 --name csv-uploader-run sid5794/csv-uploader
+```
+
 ## Architecture
 
 The server and client components has been kept in a single directory for ease of development. The components are also packaged together and deployed in the same server for ease. 
