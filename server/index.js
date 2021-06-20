@@ -33,13 +33,15 @@ app.post("/api/upload", (req, res) => {
         if (err) {
             res.status(500).send({ message: "File upload failed", code: 200 });
         } else {
-            const jsonArray = csv().fromFile(`${newpath}${filename}`)
+            const jsonArray = csv({ colParser: metaData.columnParser, checkType: true }).fromFile(`${newpath}${filename}`)
             jsonArray.then(json => {
+                console.log(json)
                 var result = validate(json, metaData.schema)
-                if (!result.valid) res.status(500).send({ message: "CSV headers doesnt match", code: 500 });
+                if (!result.valid) res.status(500).send({ message: "Data provided doesnt match the template file." + 
+                "Check if header data is wrong. It could be that user uploaded a string value in numeric column.", code: 500 });
                 else {
                     file.mv(`${newpath}${backupFile}`)
-                    res.status(200).send({ message: "File Uploaded", code: 200 });
+                    res.status(200).send({ message: "File Uploaded Sucessfully", code: 200 });
                 }
             })
         }
@@ -50,6 +52,10 @@ app.post("/api/upload", (req, res) => {
 app.get("/api/data", (req, res) => {
     try {
         const filePath = __dirname + "/files/UploadCSV.csv"
+        if (!fs.existsSync(filePath)) {
+            res.json([]);
+            return;
+        }
         const jsonArray = csv().fromFile(filePath)
         jsonArray.then(json => {
             res.json(json);
@@ -60,7 +66,18 @@ app.get("/api/data", (req, res) => {
         res.json([]);
         return;
     }
-    
+});
+
+app.post("/api/reset", (req, res) => {
+    try {
+        const filePath = __dirname + "/files/UploadCSV.csv"
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath)
+        }
+        res.status(200).send({ message: "Table data has been reset.", code: 200 });
+    } catch (err) {
+        res.status(500).send({ message: "Couldnt reset CSV data: " + err.message, code: 500 });
+    }
 });
 
 app.get('/api/templateFile', function (req, res) {

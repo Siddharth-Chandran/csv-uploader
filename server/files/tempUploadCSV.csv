@@ -1,0 +1,3 @@
+id, name, age, manager, salary, department, company
+1s,Sid,26,,999999,GBM,HSBC
+2,Meenu, 24,Sid, 999999, GBM, HSBCD
