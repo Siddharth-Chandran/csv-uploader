@@ -79,7 +79,7 @@ app.post("/api/reset", (req, res) => {
 });
 
 app.get('/api/templateFile', function (req, res) {
-    var data = '"Name", "Age", "Manager", "Salary", "Department", "Company"'
+    var data = '"id", "name", "age", "manager", "salary", "department", "company"'
     res.setHeader('Content-disposition', 'attachment; filename=UserTemplateFile.csv');
     res.set('Content-Type', 'text/csv');
     res.status(200).send(data);
